@@ -1,11 +1,9 @@
-package br.up.edu.rgm33950873.data
+package br.edu.up.rgm34681418.data
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import br.edu.up.rgm34681418.data.Item
-import br.edu.up.rgm34681418.data.ItemDao
 
 // Define a base de dados com a entidade Item e a versão do esquema.
 @Database(entities = [Item::class], version = 1, exportSchema = false)
