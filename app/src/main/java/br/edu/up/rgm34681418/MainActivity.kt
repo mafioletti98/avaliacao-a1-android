@@ -1,5 +1,5 @@
 
-package com.example.inventory
+package br.edu.up.rgm34681418
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import br.edu.up.rgm34681418.InventoryApp
 import com.example.inventory.ui.theme.InventoryTheme
 
 class MainActivity : ComponentActivity() {

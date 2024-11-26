@@ -8,7 +8,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.inventory"
+        applicationId = "br.edu.up.rgm34681418"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -51,7 +51,11 @@ android {
 }
 
 dependencies {
-    // Import the Compose BOM
+
+    implementation("androidx.room:room-runtime:${rootProject.extra["room_version"]}")
+    ksp("androidx.room:room-compiler:${rootProject.extra["room_version"]}")
+    implementation("androidx.room:room-ktx:${rootProject.extra["room_version"]}")
+
     implementation(platform("androidx.compose:compose-bom:2023.10.01"))
     implementation("androidx.activity:activity-compose:1.8.1")
     implementation("androidx.compose.material3:material3")
