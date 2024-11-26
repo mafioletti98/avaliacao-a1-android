@@ -1,6 +1,5 @@
 package br.edu.up.rgm34681418.ui
 
-import android.app.Application
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
 import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
@@ -12,39 +11,41 @@ import br.edu.up.rgm34681418.ui.item.ItemDetailsViewModel
 import br.edu.up.rgm34681418.ui.item.ItemEditViewModel
 import br.edu.up.rgm34681418.ui.item.ItemEntryViewModel
 
-/**
- * Provides Factory to create instance of ViewModel for the entire Inventory app
- */
 object AppViewModelProvider {
     val Factory = viewModelFactory {
-        // Initializer for ItemEditViewModel
+        // Configuração do ItemEditViewModel
         initializer {
             ItemEditViewModel(
-                this.createSavedStateHandle()
+                createSavedStateHandle(),
+                getInventoryApplication().container.itemsRepository
             )
         }
-        // Initializer for ItemEntryViewModel
+        // Configuração do ItemEntryViewModel
         initializer {
-            ItemEntryViewModel()
+            ItemEntryViewModel(
+                getInventoryApplication().container.itemsRepository
+            )
         }
-
-        // Initializer for ItemDetailsViewModel
+        // Configuração do ItemDetailsViewModel
         initializer {
             ItemDetailsViewModel(
-                this.createSavedStateHandle()
+                createSavedStateHandle(),
+                getInventoryApplication().container.itemsRepository
             )
         }
-
-        // Initializer for HomeViewModel
+        // Configuração do HomeViewModel
         initializer {
-            HomeViewModel()
+            HomeViewModel(
+                getInventoryApplication().container.itemsRepository
+            )
         }
     }
-}
 
-/**
- * Extension function to queries for [Application] object and returns an instance of
- * [InventoryApplication].
- */
-fun CreationExtras.inventoryApplication(): InventoryApplication =
-    (this[AndroidViewModelFactory.APPLICATION_KEY] as InventoryApplication)
+    /**
+     * Função de extensão para obter a instância de [InventoryApplication]
+     * a partir das [CreationExtras].
+     */
+    private fun CreationExtras.getInventoryApplication(): InventoryApplication {
+        return this[AndroidViewModelFactory.APPLICATION_KEY] as InventoryApplication
+    }
+}

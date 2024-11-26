@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import br.edu.up.rgm34681418.data.ItemsRepository
 
 
 /**
@@ -12,6 +13,7 @@ import androidx.lifecycle.ViewModel
  */
 class ItemEditViewModel(
     savedStateHandle: SavedStateHandle,
+    itemsRepository: ItemsRepository,
 ) : ViewModel() {
 
     /**

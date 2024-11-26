@@ -1,19 +1,3 @@
-/*
- * Copyright (C) 2023 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package br.edu.up.rgm34681418.ui.item
 
 import androidx.compose.runtime.getValue
@@ -21,80 +5,82 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import br.edu.up.rgm34681418.data.Item
+import br.edu.up.rgm34681418.data.ItemsRepository
 import java.text.NumberFormat
 
-/**
- * ViewModel to validate and insert items in the Room database.
- */
-class ItemEntryViewModel : ViewModel() {
+class ItemEntryViewModel(private val repository: ItemsRepository) : ViewModel() {
 
-    /**
-     * Holds current item ui state
-     */
-    var itemUiState by mutableStateOf(ItemUiState())
+    var uiState by mutableStateOf(ItemState())
         private set
 
     /**
-     * Updates the [itemUiState] with the value provided in the argument. This method also triggers
-     * a validation for input values.
+     * Atualiza o estado da interface de usuário com os detalhes do item fornecidos.
+     * Também realiza a validação dos campos.
      */
-    fun updateUiState(itemDetails: ItemDetails) {
-        itemUiState =
-            ItemUiState(itemDetails = itemDetails, isEntryValid = validateInput(itemDetails))
+    fun atualizarEstado(detalhesItem: DetalhesItem) {
+        uiState = ItemState(
+            detalhesItem = detalhesItem,
+            entradaValida = validarEntrada(detalhesItem)
+        )
     }
 
-    private fun validateInput(uiState: ItemDetails = itemUiState.itemDetails): Boolean {
-        return with(uiState) {
-            name.isNotBlank() && price.isNotBlank() && quantity.isNotBlank()
+    private fun validarEntrada(estado: DetalhesItem = uiState.detalhesItem): Boolean {
+        return estado.nome.isNotBlank() && estado.preco.isNotBlank() && estado.quantidade.isNotBlank()
+    }
+
+    suspend fun salvarItem() {
+        if (validarEntrada()) {
+            repository.adicionarItem(uiState.detalhesItem.converterParaItem())
         }
     }
 }
 
 /**
- * Represents Ui State for an Item.
+ * Representa o estado da interface de usuário para um Item.
  */
-data class ItemUiState(
-    val itemDetails: ItemDetails = ItemDetails(),
-    val isEntryValid: Boolean = false
+data class ItemState(
+    val detalhesItem: DetalhesItem = DetalhesItem(),
+    val entradaValida: Boolean = false
 )
 
-data class ItemDetails(
+data class DetalhesItem(
     val id: Int = 0,
-    val name: String = "",
-    val price: String = "",
-    val quantity: String = "",
+    val nome: String = "",
+    val preco: String = "",
+    val quantidade: String = "",
 )
 
 /**
- * Extension function to convert [ItemDetails] to [Item]. If the value of [ItemDetails.price] is
- * not a valid [Double], then the price will be set to 0.0. Similarly if the value of
- * [ItemDetails.quantity] is not a valid [Int], then the quantity will be set to 0
+ * Função de extensão para converter DetalhesItem em Item.
  */
-fun ItemDetails.toItem(): Item = Item(
+fun DetalhesItem.converterParaItem(): Item = Item(
     id = id,
-    name = name,
-    price = price.toDoubleOrNull() ?: 0.0,
-    quantity = quantity.toIntOrNull() ?: 0
+    name = nome,
+    price = preco.toDoubleOrNull() ?: 0.0,
+    quantity = quantidade.toIntOrNull() ?: 0
 )
 
-fun Item.formatedPrice(): String {
+/**
+ * Função de extensão para formatar o preço de um Item.
+ */
+fun Item.precoFormatado(): String {
     return NumberFormat.getCurrencyInstance().format(price)
 }
 
 /**
- * Extension function to convert [Item] to [ItemUiState]
+ * Função de extensão para converter um Item em ItemState.
  */
-fun Item.toItemUiState(isEntryValid: Boolean = false): ItemUiState = ItemUiState(
-    itemDetails = this.toItemDetails(),
-    isEntryValid = isEntryValid
+fun Item.converterParaEstado(entradaValida: Boolean = false): ItemState = ItemState(
+    detalhesItem = this.converterParaDetalhes(),
+    entradaValida = entradaValida
 )
 
 /**
- * Extension function to convert [Item] to [ItemDetails]
+ * Função de extensão para converter um Item em DetalhesItem.
  */
-fun Item.toItemDetails(): ItemDetails = ItemDetails(
+fun Item.converterParaDetalhes(): DetalhesItem = DetalhesItem(
     id = id,
-    name = name,
-    price = price.toString(),
-    quantity = quantity.toString()
+    nome = name,
+    preco = price.toString(),
+    quantidade = quantity.toString()
 )
