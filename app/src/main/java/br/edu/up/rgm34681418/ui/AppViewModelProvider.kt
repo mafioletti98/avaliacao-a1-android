@@ -13,7 +13,6 @@ import br.edu.up.rgm34681418.ui.item.ItemEntryViewModel
 
 object AppViewModelProvider {
     val Factory = viewModelFactory {
-        // Configuração do ItemEditViewModel
         initializer {
             ItemEditViewModel(
                 createSavedStateHandle(),

@@ -33,7 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.edu.up.rgm34681418.InventoryTopAppBar
 import br.edu.up.rgm34681418.data.Item
-import br.edu.up.rgm34681418.ui.item.formatedPrice
+import br.edu.up.rgm34681418.ui.item.precoFormatado
 import br.edu.up.rgm34681418.ui.navigation.NavigationDestination
 import com.example.inventory.R
 import com.example.inventory.ui.theme.InventoryTheme
@@ -156,7 +156,7 @@ private fun InventoryItem(
                 )
                 Spacer(Modifier.weight(1f))
                 Text(
-                    text = item.formatedPrice(),
+                    text = item.precoFormatado(),
                     style = MaterialTheme.typography.titleMedium
                 )
             }
