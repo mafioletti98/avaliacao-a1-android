@@ -1,8 +1,21 @@
-package br.edu.up.rgm34681418.ui.home
+/*
+ * Copyright (C) 2023 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-import androidx.compose.runtime.getValue
-import androidx.lifecycle.viewmodel.compose.viewModel
-import br.edu.up.rgm34681418.ui.AppViewModelProvider
+package br.up.edu.rgm33950873.ui.home
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,6 +40,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -35,12 +49,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import br.edu.up.rgm34681418.InventoryTopAppBar
 import br.edu.up.rgm34681418.data.Item
+import br.edu.up.rgm34681418.ui.AppViewModelProvider
+import br.edu.up.rgm34681418.ui.home.HomeViewModel
 import br.edu.up.rgm34681418.ui.item.precoFormatado
 import br.edu.up.rgm34681418.ui.navigation.NavigationDestination
-import com.example.inventory.R
-import com.example.inventory.ui.theme.InventoryTheme
+import br.edu.up.rgm34681418.ui.theme.InventoryTheme
+import br.up.edu.rgm34681418.R
 
 object HomeDestination : NavigationDestination {
     override val route = "home"
@@ -58,6 +75,7 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val homeUiState by viewModel.estadoUiHome.collectAsState()
 

@@ -40,11 +40,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import br.edu.up.rgm34681418.InventoryTopAppBar
-import com.example.inventory.R
 import br.edu.up.rgm34681418.data.Item
+import br.up.edu.rgm34681418.R
 import br.edu.up.rgm34681418.ui.AppViewModelProvider
 import br.edu.up.rgm34681418.ui.navigation.NavigationDestination
-import com.example.inventory.ui.theme.InventoryTheme
+import br.edu.up.rgm34681418.ui.theme.InventoryTheme
 import kotlinx.coroutines.launch
 
 
@@ -63,7 +63,7 @@ fun ItemDetailsScreen(
     modifier: Modifier = Modifier,
     viewModel: ItemDetailsViewModel = viewModel (factory = AppViewModelProvider.Factory)
 ) {
-    val uiState = viewModel.uiState.collectAsState()
+    val uiState = viewModel.EstadoUi.collectAsState()
     val coroutineScope = rememberCoroutineScope()
     Scaffold(
         topBar = {
@@ -88,9 +88,9 @@ fun ItemDetailsScreen(
     ) { innerPadding ->
         ItemDetailsBody(
             itemDetailsUiState = ItemDetailsUiState(),
-            onSellItem = {viewModel.reduceQuantityByOne() },
+            onSellItem = {viewModel.reduzirQuantidade() },
             onDelete = { coroutineScope.launch {
-                viewModel.deleteItem()
+                viewModel.excluirItem()
                 navigateBack() }},
             modifier = Modifier
                 .padding(

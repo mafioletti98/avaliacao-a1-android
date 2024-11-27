@@ -7,14 +7,14 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import br.edu.up.rgm34681418.ui.home.HomeDestination
-import br.edu.up.rgm34681418.ui.home.HomeScreen
 import br.edu.up.rgm34681418.ui.item.ItemDetailsDestination
 import br.edu.up.rgm34681418.ui.item.ItemEntryDestination
 import br.edu.up.rgm34681418.ui.item.ItemEntryScreen
 import br.edu.up.rgm34681418.ui.item.ItemDetailsScreen
 import br.edu.up.rgm34681418.ui.item.ItemEditDestination
 import br.edu.up.rgm34681418.ui.item.ItemEditScreen
+import br.up.edu.rgm33950873.ui.home.HomeDestination
+import br.up.edu.rgm33950873.ui.home.HomeScreen
 
 
 /**

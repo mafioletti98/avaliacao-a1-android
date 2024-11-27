@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.inventory.ui.theme
+package br.edu.up.rgm34681418.ui.theme
 
 import android.app.Activity
 import android.os.Build
@@ -97,8 +97,6 @@ private val DarkColorScheme = darkColorScheme(
 @Composable
 fun InventoryTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    // Dynamic color in this app is turned off for learning purposes
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {

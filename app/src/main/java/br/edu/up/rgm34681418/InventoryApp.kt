@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package br.edu.up.rgm34681418
 
 import androidx.compose.material.icons.Icons.Filled
@@ -13,9 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.inventory.R.string
 import br.edu.up.rgm34681418.ui.navigation.InventoryNavHost
-
+import br.up.edu.rgm34681418.R
 
 /**
  * Top level composable that represents screens for the application.
@@ -28,7 +29,6 @@ fun InventoryApp(navController: NavHostController = rememberNavController()) {
 /**
  * App bar to display title and conditionally display the back navigation.
  */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InventoryTopAppBar(
     title: String,
@@ -46,7 +46,7 @@ fun InventoryTopAppBar(
                 IconButton(onClick = navigateUp) {
                     Icon(
                         imageVector = Filled.ArrowBack,
-                        contentDescription = stringResource(string.back_button)
+                        contentDescription = stringResource(R.string.back_button)
                     )
                 }
             }

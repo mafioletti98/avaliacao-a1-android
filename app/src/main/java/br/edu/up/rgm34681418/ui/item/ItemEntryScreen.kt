@@ -26,10 +26,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import br.edu.up.rgm34681418.InventoryTopAppBar
+import br.up.edu.rgm34681418.R
 import br.edu.up.rgm34681418.ui.AppViewModelProvider
 import br.edu.up.rgm34681418.ui.navigation.NavigationDestination
-import com.example.inventory.R
-import com.example.inventory.ui.theme.InventoryTheme
+import br.edu.up.rgm34681418.ui.theme.InventoryTheme
 import kotlinx.coroutines.launch
 import java.util.Currency
 import java.util.Locale

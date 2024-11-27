@@ -21,7 +21,7 @@ class ItemDetailsViewModel(
     companion object {
         private const val TIMEOUT_MILLIS = 5_000L
     }
-    val uiState: StateFlow<ItemDetailsUiState> =
+    val EstadoUi: StateFlow<ItemDetailsUiState> =
         repository.observarItemPorId(itemId)
             .filterNotNull()
             .map {
@@ -31,17 +31,17 @@ class ItemDetailsViewModel(
                 started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
                 initialValue = ItemDetailsUiState()
             )
-    fun reduceQuantityByOne() {
+    fun reduzirQuantidade() {
         viewModelScope.launch {
-            val currentItem = uiState.value.itemDetails.converterParaItem()
+            val currentItem = EstadoUi.value.itemDetails.converterParaItem()
             if (currentItem.quantity > 0) {
                 repository.atualizarItem(currentItem.copy(quantity = currentItem.quantity - 1))
             }
         }
     }
 
-    suspend fun deleteItem() {
-        repository.removerItem(uiState.value.itemDetails.converterParaItem())
+    suspend fun excluirItem() {
+        repository.removerItem(EstadoUi.value.itemDetails.converterParaItem())
     }
 }
 

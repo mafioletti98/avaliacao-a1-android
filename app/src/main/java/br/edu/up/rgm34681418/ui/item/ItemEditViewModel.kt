@@ -5,28 +5,48 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import br.edu.up.rgm34681418.data.ItemsRepository
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 
-/**
- * ViewModel to retrieve and update an item from the [ItemsRepository]'s data source.
- */
 class ItemEditViewModel(
     savedStateHandle: SavedStateHandle,
-    itemsRepository: ItemsRepository,
+    private val repository: ItemsRepository
 ) : ViewModel() {
 
-    /**
-     * Holds current item ui state
-     */
-    var itemUiState by mutableStateOf(ItemUiState())
+    var itemUiState by mutableStateOf(ItemState())
         private set
 
     private val itemId: Int = checkNotNull(savedStateHandle[ItemEditDestination.itemIdArg])
 
-    private fun validateInput(uiState: ItemDetails = itemUiState.itemDetails): Boolean {
+    init {
+        viewModelScope.launch {
+            itemUiState = repository.observarItemPorId(itemId)
+                .filterNotNull()
+                .first()
+                .converterParaEstado(true)
+        }
+    }
+
+    private fun validateInput(uiState: DetalhesItem = itemUiState.detalhesItem): Boolean {
         return with(uiState) {
-            name.isNotBlank() && price.isNotBlank() && quantity.isNotBlank()
+            nome.isNotBlank() && preco.isNotBlank() && quantidade.isNotBlank()
+        }
+    }
+
+    fun updateUiState(detalhesItem: DetalhesItem) {
+        itemUiState =
+            ItemState(
+                detalhesItem = detalhesItem, entradaValida = validateInput(detalhesItem)
+            )
+    }
+
+    suspend fun updateItem() {
+        if (validateInput(itemUiState.detalhesItem)) {
+            repository.atualizarItem(itemUiState.detalhesItem.converterParaItem())
         }
     }
 }
