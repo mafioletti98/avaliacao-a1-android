@@ -13,10 +13,6 @@ class ItemEntryViewModel(private val repository: ItemsRepository) : ViewModel() 
     var uiState by mutableStateOf(ItemState())
         private set
 
-    /**
-     * Atualiza o estado da interface de usuário com os detalhes do item fornecidos.
-     * Também realiza a validação dos campos.
-     */
     fun atualizarEstado(detalhesItem: DetalhesItem) {
         uiState = ItemState(
             detalhesItem = detalhesItem,
@@ -35,9 +31,6 @@ class ItemEntryViewModel(private val repository: ItemsRepository) : ViewModel() 
     }
 }
 
-/**
- * Representa o estado da interface de usuário para um Item.
- */
 data class ItemState(
     val detalhesItem: DetalhesItem = DetalhesItem(),
     val entradaValida: Boolean = false
@@ -50,9 +43,9 @@ data class DetalhesItem(
     val quantidade: String = "",
 )
 
-/**
- * Função de extensão para converter DetalhesItem em Item.
- */
+
+
+
 fun DetalhesItem.converterParaItem(): Item = Item(
     id = id,
     name = nome,
@@ -60,24 +53,15 @@ fun DetalhesItem.converterParaItem(): Item = Item(
     quantity = quantidade.toIntOrNull() ?: 0
 )
 
-/**
- * Função de extensão para formatar o preço de um Item.
- */
 fun Item.precoFormatado(): String {
     return NumberFormat.getCurrencyInstance().format(price)
 }
 
-/**
- * Função de extensão para converter um Item em ItemState.
- */
 fun Item.converterParaEstado(entradaValida: Boolean = false): ItemState = ItemState(
     detalhesItem = this.converterParaDetalhes(),
     entradaValida = entradaValida
 )
 
-/**
- * Função de extensão para converter um Item em DetalhesItem.
- */
 fun Item.converterParaDetalhes(): DetalhesItem = DetalhesItem(
     id = id,
     nome = name,

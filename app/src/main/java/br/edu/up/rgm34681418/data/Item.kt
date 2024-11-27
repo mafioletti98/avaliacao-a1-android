@@ -1,9 +1,5 @@
 package br.edu.up.rgm34681418.data
 
-
-/**
- * Entity data class represents a single row in the database.
- */
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
